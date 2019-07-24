@@ -82,4 +82,4 @@ nato = {"A":"ALPHA",
         "Y":"YANKEE",
         "Z":"ZULU",
         " ":" ",
-        "interChar":None}
+"interChar":None}
