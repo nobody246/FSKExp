@@ -87,6 +87,7 @@ while True:
                   msg=msg.replace("101","111")
                while "010" in msg:
                   msg=msg.replace("010","000")
+               system("clear")
                print processBits(msg)
                msg = ""
       except Exception as e:
