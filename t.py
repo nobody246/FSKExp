@@ -81,7 +81,7 @@ while True:
                loScore += 1
             else:
                loScore = 0
-            if loScore >= 44:
+            if loScore >= 14:
                loScore = 0
                while "101" in msg: #clean up stray bits
                   msg=msg.replace("101","111")
