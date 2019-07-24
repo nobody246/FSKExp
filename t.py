@@ -89,7 +89,6 @@ while True:
                   msg=msg.replace("010","000")
                system("clear")
                print processBits(msg)
-               msg = ""
       except Exception as e:
           print e
           scoreIndex=0
