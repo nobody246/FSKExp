@@ -81,14 +81,14 @@ while True:
                loScore += 1
             else:
                loScore = 0
-            if loScore >= 14:
+            if loScore >= 44:
                loScore = 0
                while "101" in msg: #clean up stray bits
                   msg=msg.replace("101","111")
                while "010" in msg:
                   msg=msg.replace("010","000")
-               system("clear")
                print processBits(msg)
+               msg=""
       except Exception as e:
           print e
           scoreIndex=0
