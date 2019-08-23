@@ -9,7 +9,7 @@ from FSKChars import FSKToEnglish
 #Sensitivity, 0.05: more Sensitive
 #             0.1: Probably Ideal
 #             1: less sensitive, 
-SENSITIVITY= 0.2
+SENSITIVITY= 0.4
 
 #Bandwidth for detection 
 BANDWIDTH = 85
