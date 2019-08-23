@@ -6,6 +6,7 @@ from scipy import fft
 from time import sleep, time
 from os import system
 from FSKChars import FSKToEnglish
+import signal
 #Sensitivity, 0.05: more Sensitive
 #             0.1: Probably Ideal
 #             1: less sensitive, 
@@ -22,6 +23,13 @@ stream = p.open(format=pyaudio.paInt16,
                 rate=RATE,
                 input=True,
                 frames_per_buffer=SAMPLES)
+def sigHandler(s, fr):
+   global p, stream
+   stream.stop_stream()
+   stream.close()
+   p.terminate()     
+   exit(0)
+signal.signal(signal.SIGINT, sigHandler)
 lo = 1600
 hi = 2600
 DETECT = [lo,hi]
@@ -92,10 +100,7 @@ while True:
       except Exception as e:
           print e
           scoreIndex=0
-          pass
-stream.stop_stream()
-stream.close()
-p.terminate()              
+          pass         
               
 
       
