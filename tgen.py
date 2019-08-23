@@ -47,6 +47,3 @@ signal.signal(signal.SIGINT, sigHandler)
 while True:
     for m in message:
        playFreq(freqs[int(m)])
-stream.stop_stream()
-stream.close()
-p.terminate()
