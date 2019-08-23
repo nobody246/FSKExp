@@ -2,7 +2,7 @@ import pyaudio
 import numpy as np
 from time import sleep
 from FSKChars import englishToFSK, nato
-
+import signal
 #todo add as params
 volume = 1
 fs = 44100 
@@ -37,6 +37,13 @@ stream = p.open(format=pyaudio.paFloat32,
                 channels=1,
                 rate=fs,
                 output=True)
+def sigHandler(s, fr):
+   global p, stream
+   stream.stop_stream()
+   stream.close()
+   p.terminate()     
+   exit(0)
+signal.signal(signal.SIGINT, sigHandler)
 while True:
     for m in message:
        playFreq(freqs[int(m)])
