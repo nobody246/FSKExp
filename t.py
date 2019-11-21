@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import pyaudio
 from numpy import zeros,linspace,short,fromstring,hstack,transpose
 from scipy import fft
@@ -10,12 +9,12 @@ import signal
 #Sensitivity, 0.05: more Sensitive
 #             0.1: Probably Ideal
 #             1: less sensitive, 
-SENSITIVITY= 0.1
+SENSITIVITY= 0.08
 
 #Bandwidth for detection 
-BANDWIDTH = 85
+BANDWIDTH = 70
 #Set up audio sampler
-SAMPLES = 512
+SAMPLES = 1024
 RATE = 88200
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paInt16,
@@ -30,7 +29,7 @@ def sigHandler(s, fr):
    p.terminate()     
    exit(0)
 signal.signal(signal.SIGINT, sigHandler)
-lo = 1600
+lo = 2300
 hi = 2600
 DETECT = [lo,hi]
 o = ""
@@ -78,8 +77,8 @@ while True:
       try:
          if max(intensity[(frequencies < tone+BANDWIDTH) &
                           (frequencies > tone-BANDWIDTH )]) >\
-            max(intensity[(frequencies < tone-1000) &
-                          (frequencies > tone-2000)]) + SENSITIVITY:
+            max(intensity[(frequencies < tone-100) &
+                          (frequencies > tone-200)]) + SENSITIVITY:
             if not lockFlag:
                print "Carrier locked! Getting message.."
                lockFlag = True
@@ -89,7 +88,7 @@ while True:
                loScore += 1
             else:
                loScore = 0
-            if loScore >= 44:
+            if loScore >= 23:
                loScore = 0
                while "101" in msg: #clean up stray bits
                   msg=msg.replace("101","111")
@@ -100,7 +99,7 @@ while True:
       except Exception as e:
           print e
           scoreIndex=0
-          pass         
+          pass        
               
 
       
