@@ -9,10 +9,10 @@ import signal
 #Sensitivity, 0.05: more Sensitive
 #             0.1: Probably Ideal
 #             1: less sensitive, 
-SENSITIVITY= 0.08
+SENSITIVITY= 0.05
 
 #Bandwidth for detection 
-BANDWIDTH = 70
+BANDWIDTH = 60
 #Set up audio sampler
 SAMPLES = 1024
 RATE = 88200
@@ -43,7 +43,7 @@ def processBits(bits):
    buf = []
    dotMin = 1
    dashMin = 6
-   space = 8
+   space = 6
    m=""
    for bit in bits:
       if int(bit)==1:
@@ -88,7 +88,7 @@ while True:
                loScore += 1
             else:
                loScore = 0
-            if loScore >= 23:
+            if loScore >= 21:
                loScore = 0
                while "101" in msg: #clean up stray bits
                   msg=msg.replace("101","111")

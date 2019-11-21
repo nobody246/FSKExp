@@ -10,8 +10,8 @@ duration = .12
 lo = 2300.0
 hi = 2600.0
 freqs = [lo,hi]
-useNato = True
-messageStr =""" abcdefghijklmnopqrstuv hax """
+useNato = False#True
+messageStr ="""    ABCDEFGHIJKLMNOPQRSTUVWXYZ     """
 message=""
 for s in messageStr.upper():
       if not useNato or (useNato and s == "*"):
