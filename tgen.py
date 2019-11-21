@@ -6,12 +6,12 @@ import signal
 #todo add as params
 volume = 1
 fs = 44100 
-duration = .08
-lo = 1600.0
+duration = .12
+lo = 2300.0
 hi = 2600.0
 freqs = [lo,hi]
 useNato = True
-messageStr ="""        dflksjfnsdf * JHBKJHB * QWODL * fbqxdaz * qpwoiaccvbf *       """
+messageStr =""" abcdefghijklmnopqrstuv hax """
 message=""
 for s in messageStr.upper():
       if not useNato or (useNato and s == "*"):
@@ -47,3 +47,6 @@ signal.signal(signal.SIGINT, sigHandler)
 while True:
     for m in message:
        playFreq(freqs[int(m)])
+stream.stop_stream()
+stream.close()
+p.terminate()
