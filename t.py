@@ -6,6 +6,7 @@ from time import sleep, time
 from os import system
 from FSKChars import FSKToEnglish
 import signal
+import sys
 #Sensitivity, 0.05: more Sensitive
 #             0.1: Probably Ideal
 #             1: less sensitive, 
@@ -79,25 +80,27 @@ while True:
                           (frequencies > tone-BANDWIDTH )]) >\
             max(intensity[(frequencies < tone-100) &
                           (frequencies > tone-200)]) + SENSITIVITY:
-            if not lockFlag:
-               print "Carrier locked! Getting message.."
-               lockFlag = True
             b = int(tone == hi)
             msg+=str(b)
             if not b:
                loScore += 1
+               if not lockFlag:
+                  print "Tone detected! Attempting to demodulate.."
+                  lockFlag = True
             else:
                loScore = 0
-            if loScore >= 21:
+            if loScore >= 25:
                loScore = 0
                while "101" in msg: #clean up stray bits
                   msg=msg.replace("101","111")
                while "010" in msg:
                   msg=msg.replace("010","000")
-               print processBits(msg)
+               msg=processBits(msg)
+               print msg
                msg=""
       except Exception as e:
           print e
+          print 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno)
           scoreIndex=0
           pass        
               

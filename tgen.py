@@ -10,8 +10,8 @@ duration = .12
 lo = 2300.0
 hi = 2600.0
 freqs = [lo,hi]
-useNato = False#True
-messageStr ="""    ABCDEFGHIJKLMNOPQRSTUVWXYZ     """
+useNato = False #set to True to broadcast chars phoenetically
+messageStr ="""                              1999 2000 2001 2002 0 1 2 3 4 5 6 7 8 9 foo bar testing hello world the quick brown fox jumped over the lazy moon testing testing one two three ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 """
 message=""
 for s in messageStr.upper():
       if not useNato or (useNato and s == "*"):
