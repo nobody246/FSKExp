@@ -3,6 +3,7 @@ import numpy as np
 from time import sleep
 from FSKChars import englishToFSK, nato
 import signal
+import validate
 #todo add as params
 volume = 1
 fs = 44100 
@@ -11,22 +12,31 @@ lo = 2300.0
 hi = 2600.0
 freqs = [lo,hi]
 useNato = False #set to True to broadcast chars phoenetically
-messageStr ="""                              1999 2000 2001 2002 0 1 2 3 4 5 6 7 8 9 foo bar testing hello world the quick brown fox jumped over the lazy moon testing testing one two three ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 """
+messageStr =""" 0123456789 2019 2020 1987 1808 KING CARLITUS WAS THE KING OF THE LAND THEQUICKBROWNFOXJUMPEDOVERTHELAZYDOG THIS IS A TEST OF THE PUBLIC ANNOUNCEMENT SYSTEM THIS IS NOT AN EMERGENCY IT IS ONLY A TEST 18004444444 TANGOHOTELECFOQUEBECUNIFORMINDIACHARLIEKILOBRAVOROMEOOSCARWHISKEYNOVEMIERFOXTROTOSCARXRAYJULIETTUNIFORMMIKEPAPAECHODELTAOSCARVICTORECHOROMEOTANGOHOTELECHOLIMAALPHAZULUYANKEEDELTAOSCARGOLF ABCDEFGHIJKLMNOPQRSTUVWXYZ      """
 message=""
+m=""
 for s in messageStr.upper():
       if not useNato or (useNato and s == "*"):
             if s == "*":
                   c = 0
                   while c<3:
+                        m+="X"
                         message+=englishToFSK["X"] +\
-                                  englishToFSK["interChar"]
+                            englishToFSK["interChar"]
                         c+=1
+            elif s == " ":
+                  for x in validate.crc(m).upper():
+                        message+=englishToFSK[x] + englishToFSK["interChar"]
+                  message+=englishToFSK[s] + englishToFSK["interChar"]
+                  m=""
+                  continue
             else:
+                  m+=s
                   message+=englishToFSK[s] + englishToFSK["interChar"]
       else:
             for S in nato[s]:
                   message+=englishToFSK[S] + englishToFSK["interChar"]
-            message += englishToFSK[" "]
+            message+= englishToFSK[" "]
 p = pyaudio.PyAudio()
 def playFreq(f):
    global fs, volume, sp, duration

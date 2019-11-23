@@ -7,6 +7,8 @@ from os import system
 from FSKChars import FSKToEnglish
 import signal
 import sys
+import validate
+
 #Sensitivity, 0.05: more Sensitive
 #             0.1: Probably Ideal
 #             1: less sensitive, 
@@ -64,7 +66,13 @@ def processBits(bits):
             else:
                m+= curChr
             curChr = ""
-   return m
+   t,c,y="",1,(m.replace(" ","")).split("0X")
+   for x in y:
+      if c == len(y):
+         break
+      t+=x
+      c+=1
+   return [m, validate.crc(t).upper()]
 lockFlag = False
 loScore = 0
 while True:
@@ -96,7 +104,16 @@ while True:
                while "010" in msg:
                   msg=msg.replace("010","000")
                msg=processBits(msg)
-               print msg
+               xx,cc,m,rc = msg[0].replace(" ","").split("0X"),1,"",""
+               for a in xx:
+                  if cc==len(xx):
+                     rc = a
+                     break
+                  m+=a
+                  cc+=1
+               rc="0X"+rc
+               print "PKT: {}, C1: {}, C2:{} VERIFIED:{}"\
+                  .format(m, msg[1], rc, (msg[1] == rc))
                msg=""
       except Exception as e:
           print e
