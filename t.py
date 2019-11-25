@@ -66,14 +66,14 @@ def processBits(bits):
             else:
                m+= curChr
             curChr = ""
-   t,c,y,z="",1,(m.replace(" ","")).split("0X"),""
+   t,c,y,z="",1,m.replace(" ","").split("0X"),""
    for x in y:
       if c == len(y):
          z=x
          break
       t+=x
       c+=1
-   return [m,t,"0X{}".format(z),validate.crc(t).upper()]
+   return [t,"0X{}".format(z),validate.crc(t).upper()]
 lockFlag = False
 loScore = 0
 while True:
@@ -106,7 +106,7 @@ while True:
                   msg=msg.replace("010","000")
                msg=processBits(msg)
                print "PKT:{}, C1:{}, C2:{}, VERIFIED:{}"\
-                  .format(msg[1], msg[2], msg[3], (msg[2] == msg[3]))
+                  .format(msg[0], msg[1], msg[2], (msg[1] == msg[2]))
                msg=""
       except Exception as e:
           print e
